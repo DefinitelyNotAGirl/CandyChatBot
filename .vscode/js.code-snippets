@@ -1,0 +1,19 @@
+{
+	"code block": {
+		"prefix": "block",
+		"body": [
+			"//$1",
+			"//$1 $2",
+			"//$1",
+			"$0"
+		]
+	},
+	"db query": {
+		"prefix": "db",
+		"body": [
+			"await db.query(",
+			"\t`$0`",
+			").then((rows: any[]) => {console.log(rows);}).catch(err => {console.log(err);});"
+		]
+	}
+}

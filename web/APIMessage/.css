@@ -1,0 +1,208 @@
+html,body {
+	background: hsl(var(--hue),var(--bg-sat),var(--bg-lit));
+	padding: 0;
+	margin: 0;
+}
+
+:root {
+	--dummy: hsl(280, 100%, 70%);
+
+	--icon-lit: var(--txt-lit);
+	--icon-sat: var(--txt-sat);
+
+	--hue-moderator: 130;
+	--hue-ban: 0;
+	--hue-timeout: 60;
+	--hue-message-delete: 60;
+	--hue-info: 215;
+	--hue-destruct: 0;
+}
+
+.material-symbols-rounded {
+	font-variation-settings:
+	'FILL' 0,
+	'wght' 400,
+	'GRAD' 0,
+	'opsz' 24
+}
+
+#controls {
+	background: hsl(var(--hue),var(--bg-sat),calc(var(--bg-lit) + 0%));
+	border: 2px solid hsl(var(--hue),var(--txt-sat),calc(var(--txt-lit)));
+	padding-left: 5vw;
+	padding-right: 5vw;
+	--width: calc(90vw - 4px);
+	min-width: var(--width);
+	max-width: var(--width);
+	--height: calc(3vh - 4px);
+	min-height: var(--height);
+	max-height: var(--height);
+	position: absolute;
+	top: 0vh;
+	left: 0vw;
+	line-height: var(--height);
+}
+#controls button {
+	float: right;
+	height: var(--height);
+}
+
+#sockets {
+    display: flex;
+	position: absolute;
+	top: 3vh;
+	left: 0vw;
+	background: hsl(var(--hue),var(--bg-sat),calc(var(--bg-lit) + 0%));
+	border-right: 2px solid hsl(var(--hue),var(--txt-sat),calc(var(--txt-lit)));
+}
+
+.socket {
+	border-left: 2px solid hsl(var(--hue),var(--txt-sat),calc(var(--txt-lit)));
+    margin: 0;
+    padding: 0;
+	--width: calc(25vw - 2px);
+	min-width: var(--width);
+	max-width: var(--width);
+	--height: calc(17vh);
+	min-height: var(--height);
+	max-height: var(--height);
+}
+
+.socket > .status {
+	text-align: center;
+	color: hsl(var(--status-hue),var(--txt-sat),var(--txt-lit));
+	font-weight: bold;
+}
+
+.socket > div > span:first-child {
+    margin-right: 10px;
+}
+
+.socket > div {
+	padding: 5px;
+}
+
+.socket[status="5"] {
+	--status-hue: 3;
+}
+.socket[status="5"] > .status::before {
+    content: 'disconnected';
+}
+.socket[status="1"] {
+	--status-hue: 120;
+}
+.socket[status="1"] > .status::before {
+    content: 'connected';
+}
+
+#logs::-webkit-scrollbar,
+#chat::-webkit-scrollbar {
+	display: none;
+}
+
+#logs,#chat {
+	background: hsl(var(--hue),var(--bg-sat),calc(var(--bg-lit) + 0%));
+	border: 2px solid hsl(var(--hue),var(--txt-sat),calc(var(--txt-lit)));
+    border-radius: 0px;
+	margin: 0;
+    padding: 0;
+
+	overflow: scroll;
+	--width: calc(calc(100vw - 6px) / 2);
+	--height: calc(80vh - 4px);
+	min-width: var(--width);
+	min-height: var(--height);
+	max-width: var(--width);
+	max-height: var(--height);
+	position: absolute;
+}
+
+#logs {
+	left: 0vw;
+	top: 20vh;
+}
+#chat {
+	left: calc(var(--width) + 2px);
+	top: 20vh;
+}
+
+#logs > table {
+	width: 100%;
+}
+
+#logs > table > tbody > tr > td {
+}
+
+#logs > table > tbody {
+	border-radius: 12px;
+	background: hsl(var(--hue),var(--bg-sat),calc(var(--bg-lit) + 0%));
+}
+
+#logs > table > tbody > tr > .column_type::before,
+#logs > table > tbody > tr > .column_action::before {
+	color: hsl(var(--hue-self),var(--icon-sat),var(--icon-lit));
+	text-align: center;
+}
+
+#logs > table > tbody > tr[LogType='debug'] > .column_type::before,
+#logs > table > tbody > tr[LogType=''] > .column_type::before {
+	--hue-self: var(--hue-info);
+	content: 'info';
+}
+#logs > table > tbody > tr[LogType='mod'] > .column_type::before {
+	--hue-self: var(--hue-moderator);
+	content: 'shield';
+}
+#logs > table > tbody > tr[LogAction='ban'] > .column_action::before {
+	--hue-self: var(--hue-ban);
+	content: 'block';
+}
+#logs > table > tbody > tr[LogAction='start'] > .column_action::before {
+	--hue-self: var(--hue-info);
+	content: 'rocket_launch';
+}
+#logs > table > tbody > tr[LogAction='connect'] > .column_action::before {
+	--hue-self: var(--hue-info);
+	content: 'link';
+}
+#logs > table > tbody > tr[LogAction='refreshTokens'] > .column_action::before {
+	--hue-self: var(--hue-info);
+	content: 'lock_reset';
+}
+#logs > table > tbody > tr[LogAction='shutdown'] > .column_action::before {
+	--hue-self: var(--hue-destruct);
+	content: 'power_settings_circle';
+}
+
+.message {
+	display: flex;
+}
+.message-badge {
+	height: 20px;
+	width: 20px;
+	margin: 2.5px;
+	margin-top: auto;
+}
+.message-user,
+.message-text {
+	margin-left: 5px;
+}
+
+.button-icon {
+	background: none;
+	border: none;
+	outline: none;
+}
+
+button {
+	color: hsl(var(--hue-self),var(--icon-sat),var(--icon-lit));
+	transition: 0.25s;
+}
+button:hover {
+	scale: 1.1;
+	transition: 0.25s;
+}
+
+.button-destructive {
+	--hue-self: var(--hue-destruct);
+}

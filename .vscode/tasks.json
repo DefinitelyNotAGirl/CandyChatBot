@@ -1,0 +1,105 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		/*
+		{
+			"label": "Compile C++ Server",
+			"command": "",
+			"args": [],
+			"problemMatcher": "$gcc",
+			"icon": {
+				"id": "server"
+			},
+			"presentation": {
+				"echo": true,
+				"reveal": "always",
+				"focus": false,
+				"panel": "shared",
+				"showReuseMessage": false,
+				"clear": true
+			}
+		},
+		*/
+		{
+			"label": "compile bot and http server",
+			"command": "make",
+			"args": [],
+			"problemMatcher": "$tsc",
+			"icon": {
+				"id": "server"
+			},
+			"presentation": {
+				"echo": true,
+				"reveal": "always",
+				"focus": false,
+				"panel": "shared",
+				"showReuseMessage": false,
+				"clear": true
+			}
+		},
+		{
+			"label": "compile dashboard",
+			//"command": "npm",
+			//"args": ["run","build"],
+			"command": "webpack",
+			"args": [],
+			"options": {
+				"cwd": "./web/dashboard/"
+			},
+			"problemMatcher": "$tsc",
+			"icon": {
+				"id": "dashboard"
+			},
+			"presentation": {
+				"echo": true,
+				"reveal": "always",
+				"focus": false,
+				"panel": "shared",
+				"showReuseMessage": false,
+				"clear": true
+			}
+		},
+		{
+			"label": "compile API Message page",
+			//"command": "npm",
+			//"args": ["run","build"],
+			"command": "webpack",
+			"args": [],
+			"options": {
+				"cwd": "./web/APIMessage/"
+			},
+			"problemMatcher": "$tsc",
+			"icon": {
+				"id": "archive"
+			},
+			"presentation": {
+				"echo": true,
+				"reveal": "always",
+				"focus": false,
+				"panel": "shared",
+				"showReuseMessage": false,
+				"clear": true
+			}
+		},
+		{
+			"label": "compile error page",
+			"command": "webpack",
+			"args": [],
+			"options": {
+				"cwd": "./web/error-page/"
+			},
+			"problemMatcher": "$tsc",
+			"icon": {
+				"id": "error"
+			},
+			"presentation": {
+				"echo": true,
+				"reveal": "always",
+				"focus": false,
+				"panel": "shared",
+				"showReuseMessage": false,
+				"clear": true
+			}
+		}
+	]
+}

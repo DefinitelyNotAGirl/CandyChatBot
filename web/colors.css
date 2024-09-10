@@ -1,0 +1,11 @@
+:root {
+	--dummy: hsl(175, 100%, 70%);
+	--hue: 257;
+	--bg-sat: 10%;
+	--bg-lit: 10%;
+	--txt-sat: 100%;
+	--txt-lit: 70%;
+}
+* {
+	color: hsl(var(--hue),var(--txt-sat),var(--txt-lit));
+}
