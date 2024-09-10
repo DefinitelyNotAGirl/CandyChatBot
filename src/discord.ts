@@ -488,7 +488,7 @@ export namespace Discord {
 	}
 	
 	async function HandleDispatchEvent(Event: GatewayDispatchEvent) {
-		console.log("discord gateway dispatch event",Event);
+		console.log("discord gateway dispatch event:",Event.t);
 		if(Event.t == 'MESSAGE_REACTION_ADD') {
 			HandleAddReaction(Event.d);
 		}

@@ -7,6 +7,7 @@ import { Discord } from './discord.js';
 import { HttpServer, SendDashboardMessage, shutdown } from './WebServer.js';
 import { log } from './logging.js';
 import path from 'path';
+import * as fs from 'fs';
 
 process.title = "CandyInspector";
 //.
@@ -364,10 +365,13 @@ export async function OnTwitchChannelpointsRedemption(event: Types.Twitch.Event.
 					`INSERT INTO Redemptions (RedemptionID,DiscordMessageID,Platform,RewardID) VALUES ('${sql_format_string(event.id)}','${sql_format_string(DiscordMessageID)}','Twitch','${sql_format_string(event.reward.id)}')`
 				).then((rows: any[]) => {}).catch(err => {console.log(err);});
 			} else {
-				const filePath = path.resolve(__dirname, 'Rewards',rows[0].Function,'build','main.js');
-				const newCode = require(filePath);  // This will execute the file when required
+				const ipath = `./Rewards/${rows[0].Function}/build/main.js`;
+				const opath = `./Rewards/${rows[0].Function}/build/main.${Date.now()}.js`;
+				fs.writeFileSync(opath,fs.readFileSync(ipath));
+				const { dynamic_run } = await import('.'+opath);
+				fs.unlinkSync(opath);
 				// Assuming the required file exports a function
-				newCode.run(event);
+				dynamic_run(event);
 			}
 
 		}
@@ -394,12 +398,17 @@ async function CreateGameSpecificReward(Reward: Types.Database.Reward): Promise<
 			})
 		},BroadcasterAccessToken
 	);
-	if(response.status == 400) return response.status;
+	if(response.status >= 400 && response.status <= 599) {
+		let bj: any = await response.json();
+		console.log("reward create response:",response);
+		console.log("reward create response body:",bj);
+		return response.status;
+	}
 	let bj: any = await response.json();
 	console.log("reward create response:",response);
 	console.log("reward create response body:",bj);
 	await db.query(
-		`UPDATE Rewards SET RewardID='${bj.id}' WHERE ID='${Reward.ID}'`
+		`UPDATE Rewards SET RewardID='${bj.data[0].id}' WHERE ID='${Reward.ID}'`
 	).then((rows: any[]) => {console.log(rows);}).catch(err => {console.log(err);});
 	return response.status;
 }
@@ -413,7 +422,12 @@ async function DeleteGameSpecificReward(Reward: Types.Database.Reward): Promise<
 			method: "DELETE"
 		},BroadcasterAccessToken
 	);
-	if(response.status == 400) return response.status;
+	if(response.status >= 400 && response.status <= 599) {
+		let bj: any = await response.json();
+		console.log("reward delete response:",response);
+		console.log("reward delete response body:",bj);
+		return response.status;
+	}
 	let bj: any = await response.json();
 	console.log("reward delete response:",response);
 	console.log("reward delete response body:",bj);
