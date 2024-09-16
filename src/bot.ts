@@ -167,7 +167,7 @@ async function RunBadMessageCheck(data: any,message: Types.Twitch.Event.ChatMess
 		}
 	}
 	if(!(await HasLinkPermission(data.payload.event.chatter_user_login,data.payload.event.broadcaster_user_login,message)) && RunLinkCheck) {
-		var RegexResults = RegExp("(((http)|(https)|(ftp))://)|([a-zA-Z0-9_]*\\.[a-zA-Z]{2,})").exec(deaccented);
+		var RegexResults = RegExp("([a-zA-Z0-9_]*\\.(com|net|us|ru|ch|us))").exec(deaccented);
 		if(RegexResults != null) {
 			//console.log("regex results:",RegexResults)
 			for(let i = 0;i<RegexResults.length-1;i++) {
@@ -176,9 +176,9 @@ async function RunBadMessageCheck(data: any,message: Types.Twitch.Event.ChatMess
 				//console.log("match:",match);
 				if(match == "twitch.tv")continue;
 				Request.Twitch.deleteMessage(message);
-				if((await Request.Database.GetMessageCount(message.chatter_user_login)) > 1) {
-					Request.Twitch.SendChatMessage(`no links please @${message.chatter_user_name}.`);
-				}
+				//if((await Request.Database.GetMessageCount(message.chatter_user_login)) > 1) {
+				//	Request.Twitch.SendChatMessage(`no links please @${message.chatter_user_name}.`);
+				//}
 				break;
 			}
 		}
